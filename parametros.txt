@@ -1,0 +1,14 @@
+#include 'protheus.ch'
+#include 'parmtype.ch'
+#include 'tbiconn.ch'
+
+user function PARAMET()
+	PREPARE ENVIRONMENT Empresa "99" Filial "01"
+
+	 cTipoDB := SUPERGETMV("CL_ZTPDB", .T., "")
+	msgAlert(cValToChar(cTipoDB))
+		PUTMV("CL_ZTPDB", "PostGree")
+	alert(cValToChar(cTipoDB))
+	
+	Reset Environment
+return
