@@ -1,33 +1,34 @@
 #include 'protheus.ch'
 #include 'parmtype.ch'
-//Função que cria arquivo TXT e verifica se o arquivo realmente foi criado.
+
+//FunÃ§Ã£o que cria arquivo TXT e verifica se o arquivo realmente foi criado.
 //Adaptada por Rafael Custodio 11/11/2016
 user function GERATXT()
 
 Local cDir    := "C:\"
-Local cArq    := "Arquivo_teste.txt"
+Local cArq    := "Teste_Arquivo.txt"
 
-//³FCreate - É o comando responsavel pela criação do arquivo.                                                         ³
+//Â³FCreate - Ã‰ o comando responsavel pela criaÃ§Ã£o do arquivo.                                                         Â³
 
 Local nHandle := FCreate(cDir+cArq)
 Local nCount  := 0
 
 
-//³nHandle - A função FCreate retorna o handle, que indica se foi possível ou não criar o arquivo. Se o valor for     ³
-//³menor que zero, não foi possível criar o arquivo.                                                                  ³
+//Â³nHandle - A funÃ§Ã£o FCreate retorna o handle, que indica se foi possÃ­vel ou nÃ£o criar o arquivo. Se o valor for     Â³
+//Â³menor que zero, nÃ£o foi possÃ­vel criar o arquivo.                                                                  Â³
 
 
 If nHandle < 0
-	MsgAlert("Erro durante criação do arquivo.", "Erro!")
+	MsgAlert("Erro durante criaÃ§Ã£o do arquivo.", "Erro!")
 Else
 	
-	//³FWrite - Comando reponsavel pela gravação do texto.                                                                ³
+	//Â³FWrite - Comando reponsavel pela gravaÃ§Ã£o do texto.                                                                Â³
 	
 	For nLinha := 1 to 50
 		FWrite(nHandle, "Gravando linha " + StrZero(nLinha, 2) + CRLF)
 	Next nLinha
 	
-	//³FClose - Comando que fecha o arquivo, liberando o uso para outros programas.                                       ³
+	//Â³FClose - Comando que fecha o arquivo, liberando o uso para outros programas.                                       Â³
 
 	FClose(nHandle)
 EndIf
@@ -35,7 +36,7 @@ EndIf
 	If FILE("C:\Arquivo_teste.txt")
 		MsgInfo("Arquivo Texto criado no seguinte caminho: " + cValToChar(cDir) + cValToChar(cArq))
 	Else 
-		Alert("Não foi possível localizar o arquivo texto.", "Erro!")
+		Alert("NÃ£o foi possÃ­vel localizar o arquivo texto.", "Erro!")
 	EndIf
 	
 return
