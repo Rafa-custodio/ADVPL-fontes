@@ -1,0 +1,86 @@
+#include 'protheus.ch'
+#INCLUDE 'RWMAKE.CH'
+#INCLUDE 'FONT.CH'
+#INCLUDE 'COLORS.CH'
+#Include "Totvs.CH"
+#Include "RPTDEF.CH"
+#Include "TBICONN.CH"
+#INCLUDE "FWPrintSetup.ch"
+#INCLUDE "PARMTYPE.CH"
+#INCLUDE "topconn.ch"
+#INCLUDE "SHELL.CH"
+
+/*/{Protheus.doc} ETQCLI
+//TODO Etiqueta para impressão de dados do cliente.
+@author Rafael Custodio
+@since 26/09/2018
+@version 1.0
+@type function
+/*/
+user function ETQCLI()
+
+		local nDistVirada := -30
+			Local cTxQntEtiq := 1
+				Local aVirada := 1
+					Local nI := 1
+	
+					PREPARE ENVIRONMENT EMPRESA '99' FILIAL '01'
+	
+	for i := 1 to cTxQntEtiq
+		oFont1 := TFont():New( "Arial",,25,.t.,.t.,,,,,.f. )
+		oFont2 := TFont():New( "Arial",,28,.t.,.t.,,,,,.f. )
+		oFont2S := TFont():New( "Arial",,28,.t.,.t.,,,,,.T. )
+		oFont3 := TFont():New( "Arial",,10,.t.,.t.,,,,,.f. )
+		oFont4 := TFont():New( "Arial",,24,.t.,.t.,,,,,.f. )
+		oFont5 := TFont():New( "Arial",,20,.t.,.f.,,,,,.f. )
+		oFont6 := TFont():New( "Arial",,20,.t.,.t.,,,,,.f. )
+		oFont6S := TFont():New( "Arial",,20,.t.,.t.,,,,,.T. )
+		oFont7 := TFont():New( "Arial",,30,.t.,.t.,,,,,.f. )
+		oFont8 := TFont():New( "Arial",,35,.t.,.T.,,,,,.f. )
+
+		lAdjustToLegacy := .F. //.F.
+		lDisableSetup := .T.
+		oPrinter := FWMSPrinter():New('CLIENTES', IMP_PDF,,,lDisableSetup,,,"Allegro")
+		oPrinter:SetLandscape()
+		oPrinter:SetPaperSize(DMPAPER_ENV_C6)
+		oPrinter:SetMargin(010,010,010,010) // nEsquerda, nSuperior, nDireita, nInferior
+		oPrinter:cPathPDF := "C:\TEMP\" // Caso seja utilizada impressão em IMP_PDF
+
+		oPrinter:StartPage()
+		oPrinter:Box(0095, 0070,1070, 1620, "-2" )
+	
+		oPrinter:Say(0160,0260,"ETIQUETA DE IDENTIFICAÇÃO DE CLIENTES",oFont6,100)
+		oPrinter:Line(0230,0070,0230,1620,,"-2")
+		
+		oPrinter:Line(0230,0450,1060,450,,"-1") //linha vertical
+		
+		oPrinter:Say(0320,0110,"CLIENTE",oFont6,100)
+		oPrinter:Line(0470,0070,0470,1620,,"-2")
+		oPrinter:Say(0310,0550,"ZEKINHA DA SILVA",oFont5,100)
+		
+		oPrinter:Say(0560,0110,"NF",oFont6,100)
+		oPrinter:Line(0640,0070,0640,1620,,"-2")
+		oPrinter:Say(0550,0550,"000003213",oFont5,100)
+		
+		oPrinter:Say(0730,0110,"VOLUMES",oFont6,100)
+		oPrinter:Line(0810,0070,0810,1620,,"-2")
+		oPrinter:Say(0720,0550,"50",oFont5,100)
+		
+		oPrinter:Say(0900,0110,"ROMANEIO",oFont6,100)
+		oPrinter:Say(0890,0550,"324321",oFont5,100)
+
+		oPrinter:Box(970, 0090,1060,1612, "-2" )
+oPrinter:Say(01006,0100,"Nome da empresa - telefone, website",oFont3,100)
+oPrinter:Say(01036,0100,"Endereço da empresa",oFont3,100)
+		
+
+		oPrinter:EndPage()
+		//oPrinter:Setup()
+		oPrinter:Preview()
+		FreeObj(oPrinter)
+		oPrinter := Nil
+	next
+//	endif
+	//TMP->(dbCloseArea())
+	RESET ENVIRONMENT
+return
